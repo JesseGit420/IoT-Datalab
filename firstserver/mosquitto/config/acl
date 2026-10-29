@@ -1,0 +1,8 @@
+user sensor
+topic write stekker/#
+
+user nodered
+topic readwrite #
+
+user laptop
+topic readwrite #
