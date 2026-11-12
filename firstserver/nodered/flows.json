@@ -16,6 +16,14 @@
         "env": []
     },
     {
+        "id": "158811bf537709b3",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "b29230bfd20fb123",
         "type": "mqtt-broker",
         "name": "noderedserver",
@@ -45,6 +53,21 @@
         "willMsg": {},
         "userProps": "",
         "sessionExpiry": ""
+    },
+    {
+        "id": "60937ae422915c5a",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "influxdbserver",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
     },
     {
         "id": "5abb8a327ac85666",
@@ -275,5 +298,64 @@
         "x": 610,
         "y": 500,
         "wires": []
+    },
+    {
+        "id": "65df1f309e2f8cb2",
+        "type": "mqtt in",
+        "z": "158811bf537709b3",
+        "name": "",
+        "topic": "stekker/meting",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "b29230bfd20fb123",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 340,
+        "wires": [
+            [
+                "5f60efacb49ce3ea"
+            ]
+        ]
+    },
+    {
+        "id": "a0bfd8d07a519150",
+        "type": "influxdb out",
+        "z": "158811bf537709b3",
+        "influxdb": "60937ae422915c5a",
+        "name": "",
+        "measurement": "meting",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "iot",
+        "bucket": "energie",
+        "x": 680,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "5f60efacb49ce3ea",
+        "type": "function",
+        "z": "158811bf537709b3",
+        "name": "function 2",
+        "func": "msg.payload = [\n    msg.payload,                // de fields: je meting\n    { toestel: \"stekker\", lokaal: \"1.02\"}      // de tags\n];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 420,
+        "wires": [
+            [
+                "a0bfd8d07a519150"
+            ]
+        ]
     }
 ]
