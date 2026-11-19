@@ -58,6 +58,7 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     environment:
+      GF_USERS_DEFAULT_THEME: light
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_WACHTWOORD}
       GRAFANA_TOKEN: ${GRAFANA_TOKEN}
     volumes:
